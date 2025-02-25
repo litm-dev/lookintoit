@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+
+
+<title>Kevin Russell is Shinyribs</title>
+<!-- 
+https://css-tricks.com/adaptive-photo-layout-with-flexbox/
+ -->
+
+<script id="pop transient centered window with image sized for viewport">
+function JustSoPicWindow_onclick1(obj) {
+// orig by E Michael Brandt of ValleyWebDesigns.com - Please leave these comments intact. version 3.0.4  
+// heavily modified by BH to be an onclick function with 1 arg
+  var imageHeight = obj.naturalHeight;
+  var imageWidth = obj.naturalWidth;
+  var imageName = obj.src;
+
+  var hugMargin = 0;
+
+	var adj=0;
+	var w = screen.width;
+	var h = screen.height;
+	var byFactor=1;
+
+// lift up the bottom of window a bit
+	lift = .85
+	
+	if (imageWidth>w){	
+	  byFactor = w / imageWidth;			
+	  imageWidth = w;
+	  imageHeight = imageHeight * byFactor;
+	}
+	if (imageHeight>h-adj){
+	  byFactor = h / imageHeight;
+	  imageWidth = (imageWidth * byFactor);
+	  imageHeight = h; 
+	}
+
+	var scrWidth = w-adj;
+	var scrHeight = (h*lift)-adj;
+
+	if (imageHeight>scrHeight){
+  	  imageHeight=imageHeight*lift;
+	  imageWidth=imageWidth*lift;
+	}
+
+	var posLeft=0;
+	var posTop=0;
+
+	  var scrHeightTemp = imageHeight - 0 + 2*hugMargin;
+	  if (scrHeightTemp < scrHeight) {
+		scrHeight = scrHeightTemp;
+	  } 
+	  var scrWidthTemp = imageWidth - 0 + 2*hugMargin;
+	  if (scrWidthTemp < scrWidth) {
+		scrWidth = scrWidthTemp;
+	  }
+
+	  if (scrHeight<100){scrHeight=100;}
+	  if (scrWidth<100){scrWidth=100;}
+
+	  posTop =  ((h-(scrHeight/lift)-adj)/2);
+	  posLeft = ((w-(scrWidth)-adj)/2);
+ 	
+	if (imageHeight > (h*lift)-adj || imageWidth > w-adj){
+		imageHeight=imageHeight-adj;
+		imageWidth=imageWidth-adj;
+	}
+	
+	posTop = parseInt(posTop);
+	posLeft = parseInt(posLeft);		
+	scrWidth = parseInt(scrWidth); 
+	scrHeight = parseInt(scrHeight);
+	
+	
+	newWindow = window.open("popit","newWindow","width="+scrWidth+",height="+scrHeight+",left="+posLeft+",top="+posTop);
+	newWindow.document.open();
+	// next line must omit doctype declaration else body has padding
+//	newWindow.document.write('<html><title>click anywhere to close</title><body style="background-color:black; margin:0; padding:0" onblur="opener.document.getElementById(\'pseudoModal\').style.display=\'none\'; self.close()" onclick="opener.document.getElementById(\'pseudoModal\').style.display=\'none\'; self.close()">');  
+	newWindow.document.write('<html><title>click anywhere to close</title><body style="background-color:black; margin:0; padding:0" onclick="opener.document.getElementById(\'pseudoModal\').style.display=\'none\'; self.close()">');  
+	newWindow.document.write('<table width='+imageWidth+' border="0" cellspacing="0" cellpadding="0" align="center" height='+scrHeight+' ><tr><td>');
+	newWindow.document.write('<img src="'+imageName+'" width='+imageWidth+' height='+imageHeight+' alt="click anywhere to close">'); 
+	newWindow.document.write('</td></tr></table><script>opener.document.getElementById("pseudoModal").style.display="block";<\/script></body></html>');
+	newWindow.document.close();
+	newWindow.focus();
+}
+
+
+</script>
+
+
+
+<style>
+body {
+  background-color:black;
+}
+ul {
+  display: flex;
+  width: 95vw;
+  height: 95vh;
+  margin-top: 10vh;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10vh;
+background-color:black;
+
+	 flex-wrap: wrap;
+list-style-type: none;
+}
+ li {
+	 height: 40vh;
+	 flex-grow: 1;
+	border: solid 6px black;
+}
+
+li:hover {
+	border: solid 6px #880808;
+}
+
+/* next is a hack see url */
+ li:last-child {
+	 flex-grow: 10;
+}
+ img {
+	 max-height: 100%;
+	 min-width: 100%;
+	 object-fit: cover;
+	 vertical-align: bottom;
+}
+ @media (max-aspect-ratio: 1) {
+	 li {
+		 height: 30vh;
+	}
+}
+ @media (max-height: 480px) {
+	 li {
+		 height: 80vh;
+	}
+}
+ @media (max-aspect-ratio: 1) and (max-width: 480px) {
+	 ul {
+		 flex-direction: row;
+	}
+	 li {
+		 height: auto;
+		 width: 100%;
+	}
+	 img {
+		 width: 100%;
+		 max-height: 75vh;
+		 min-width: 0;
+	}
+}
+h1 {
+  font-family: sans-serif;
+  color:rgb(240, 192, 0);
+}
+
+#pseudoModal {
+  position:fixed;
+  width:100%;
+  height:100%;
+  left:0;
+  top:0;
+  background-color:black;
+  z-index:1002;
+  opacity:.94;
+  display:none;
+}
+</style>
+
+
+<script id="fade_classes">
+function fadeItInNow(id) {
+  document.getElementById(id).className = "fade in";
+}
+function returnFaded(id) {
+  document.getElementById(id).className = "fade in";
+}
+function outIn(obj) {
+  obj.className = "fade out";
+  obj.nextElementSibling.className = "fade in";
+}
+
+
+function fadeItInNow(id) {
+  document.getElementById(id).className = "fade in";
+}
+
+// this closes any JustSoPic window that has been left open - a UI/UX issue
+function closeAnyOpenChildWindow() {
+if (newWindow.closed) {}
+  else {
+  newWindow.close();
+  }
+}
+</script>
+
+<style id="fade animation">
+.fade {
+      animation-duration: 3s;
+      animation-fill-mode: both;
+      display: inline-block;
+    }
+
+.fade.in {
+      animation-name: fadeIn;
+    }
+
+.fade.out {
+      animation-name: fadeOut;
+	  display:none;
+    }
+
+@keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+@keyframes fadeOut {
+      from {
+        opacity: 1;
+      }
+      to {
+        opacity: 0;
+      }
+}
+
+#landing {
+  position:static;
+  top:10px;
+  left:10px;
+}
+
+
+
+
+#tom2 {
+  position: relative;
+  top:0;
+  left:0;
+  z-index:1001;
+}
+
+
+main {
+  display:block;
+}
+</style>
+
+
+
+<script id="here from trimming Comparator">
+function toggleDisplay(id) {
+	var Rep = document.getElementById(id);
+	if ( Rep.style.display != 'block' ) {
+    Rep.style.display = 'block';
+	}
+	else {
+		Rep.style.display = 'none';
+	}
+}
+</script>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+ /* for intro slideshow */ 
+    $(document).ready(function() {
+      $('.fade').click(function() {
+        $(this).removeClass('in out').addClass('out');
+      });
+    });
+</script>
+
+<script>
+function preloadImages(imageArray) {
+  imageArray.forEach(function(imageUrl) {
+    const img = new Image();
+    img.src = imageUrl;
+  });
+}
+const imagesToPreload = [
+"https://i.ibb.co/Xd8jjFP/art-Filters-01-F.jpg",
+"https://i.ibb.co/tpDy76MT/art-Filters-02-BLUEPINKpsd-F.jpg",
+"https://i.ibb.co/zHFkZYwK/art-Filters-03-F.jpg",
+"https://i.ibb.co/23zC1q8m/art-Filters-05-NICEcomplex-F.jpg",
+"https://i.ibb.co/C3Zr6scd/art-Filters-05-NICEf.jpg",
+"https://i.ibb.co/nqB7V56Y/art-Filters-08chrome3-F.jpg",
+"https://i.ibb.co/KxVDLmDs/art-Filters-08chrome4dark-F.jpg",
+"https://i.ibb.co/p6NV73XG/art-Filters-08chrome4dark-WOWF.jpg",
+"https://i.ibb.co/m78sPwR/art-Filters-08chrome4dark-WOWF.jpg",
+"https://i.ibb.co/DgKrYgm5/art-Filters-08chrome4dark-WOWF.jpg",
+"https://i.ibb.co/BKGF396Z/art-Filters-08chrome4dark-WOWow2hs-Daubs-F.jpg",
+"https://i.ibb.co/hx56QynB/art-Filters-08chrome4dark-WOWow2hs-Daubs-F.jpg",
+"https://i.ibb.co/gbXSw69K/art-Filters-08chrome4dark-WOWow2hs-F.jpg",
+"https://i.ibb.co/fGHB38tk/art-Filters-08chrome4dark-WOWow-F.jpg",
+"https://i.ibb.co/Wv6QGkzL/art-Filters-08chrome4dark-WOWow-F.jpg">
+"https://i.ibb.co/0RLRrGnV/art-Filters-08chrome4dark-WOWow-F.jpg.jpg"
+"https://i.ibb.co/b5HdmH6s/art-Filters-08chrome4dark-WOWow-F.jpg",
+"https://i.ibb.co/3ykG88gy/art-Filters-08chrome4dark-WOWow-F-4.jpg",
+"https://i.ibb.co/393f0HTF/art-Filters-08chrome5brite-F.jpg",
+"https://i.ibb.co/ZRBG7CR1/art-Filters-08chrome-F.jpg",
+"https://i.ibb.co/XfmzCH3Q/art-Filters-08chrome-F.jpg",
+"https://i.ibb.co/dw5SY04n/art-Filters-08chrome-F.jpg",
+"https://i.ibb.co/zVS8pvQR/art-Filters-08chrome-F.jpg",
+"https://i.ibb.co/JR9mmtd6/art-Filters-08chrome-F-for-Crop.jpg",
+"https://i.ibb.co/C3Zr6scd/art-Filters-05-NICEf.jpg",
+"https://i.ibb.co/TxRkyph5/art-Filters-05-NICE6-copy.jpg",
+"https://i.ibb.co/qFmvc5X1/art-Filters-05-NICE5-copy.jpg",
+"https://i.ibb.co/spsFzXmz/art-Filters-05-NICE4-copy.jpg",
+"https://i.ibb.co/Xd8jjFP/art-Filters-01-F.jpg",
+"https://i.ibb.co/spsFzXmz/art-Filters-05-NICE4-copy.jpg",
+"https://i.ibb.co/7tPhF58f/art-Filters-05-NICEf.jpg",
+"https://i.ibb.co/23zC1q8m/art-Filters-05-NICEcomplex-F.jpg",
+"https://i.ibb.co/21CBdV81/art-Filters-05-NICE8-copy.jpg",
+"https://i.ibb.co/997Jpmcj/art-Filters-05-NICE7-copy.jpg",
+"https://i.ibb.co/23zC1q8m/art-Filters-05-NICEcomplex-F.jpg",
+"https://i.ibb.co/997Jpmcj/art-Filters-05-NICE7-copy.jpg",
+"https://i.ibb.co/Q7kVmWWM/art-Filters-08chrome4dark2-copy.jpg"
+"https://i.ibb.co/XZGbwxp5/blocky-copy.jpg",
+"https://i.ibb.co/b547LBXm/blocky-1-copy.jpg",
+"https://i.ibb.co/XZGbwxp5/blocky-copy.jpg",
+"https://i.ibb.co/TB61yvgL/blocky-4-copy.jpg",
+"https://i.ibb.co/XZGbwxp5/blocky-copy.jpg",
+"https://i.ibb.co/23NzPB2v/blocky-6bw-copy.jpg",
+"https://i.ibb.co/HDTZYkNY/blocky-6bw-F-tuphat.jpg",
+"https://i.ibb.co/S74y5c1t/blocky-7-copy.jpg",
+"https://i.ibb.co/XZGbwxp5/blocky-copy.jpg",
+"https://i.ibb.co/8nxnSgSm/art-Filters-08chrome-F-blocky-Eye-WRK-jpg-copy.jpg",
+"https://i.ibb.co/Tq4QPG3L/blocky-blocky4copy-1-copy.jpg",
+"https://i.ibb.co/4nGbfc9p/blocky-blocky4copy-2-copy.jpg",
+"https://i.ibb.co/4gtdMQjW/blocky-blocky4copy-3-copy.jpg",
+"https://i.ibb.co/RGMMngD2/blocky-blocky4copy-4-copy.jpg",
+"https://i.ibb.co/cXggwPsd/blocky-blocky4copy-5-copy.jpg",
+"https://i.ibb.co/5hrWfjnG/blocky-blocky4copy-7-copy.jpg",
+"https://i.ibb.co/JWbTNCRQ/blocky-blocky4copy-8-copy.jpg",
+"https://i.ibb.co/5gdNRLTp/blocky-blocky4copy-9-copy.jpg",
+"https://i.ibb.co/0y6pb3S9/blocky-blocky4copy-10-copy.jpg",
+"https://i.ibb.co/fG1jL8rP/blocky-blocky4copy-11-copy.jpg",
+"https://i.ibb.co/bRvrjwt3/blocky-blocky4copy-92-copy.jpg"
+];
+preloadImages(imagesToPreload);
+</script>
+</head>
+
+
+
+<body>
+
+
+<main id="standalone_dropdown">
+
+<!-- a layer overlay when popup window is displayed -->
+<div id="pseudoModal" onclick="closeAnyOpenChildWindow(); this.style.display='none'"></div>
+
+<h1>Kevin Russell is Shinyribs<br>
+<sub>
+11-06-24<br></sub>
+<sup>Old Quarter Acoustic Cafe
+</sup>
+</h1>
+
+
+<ul>
+
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/Xd8jjFP/art-Filters-01-F.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/tpDy76MT/art-Filters-02-BLUEPINKpsd-F.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/zHFkZYwK/art-Filters-03-F.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/23zC1q8m/art-Filters-05-NICEcomplex-F.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/C3Zr6scd/art-Filters-05-NICEf.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/nqB7V56Y/art-Filters-08chrome3-F.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/KxVDLmDs/art-Filters-08chrome4dark-F.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/p6NV73XG/art-Filters-08chrome4dark-WOWF.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/m78sPwR/art-Filters-08chrome4dark-WOWF.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/DgKrYgm5/art-Filters-08chrome4dark-WOWF.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/BKGF396Z/art-Filters-08chrome4dark-WOWow2hs-Daubs-F.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/hx56QynB/art-Filters-08chrome4dark-WOWow2hs-Daubs-F.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/gbXSw69K/art-Filters-08chrome4dark-WOWow2hs-F.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/fGHB38tk/art-Filters-08chrome4dark-WOWow-F.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/Wv6QGkzL/art-Filters-08chrome4dark-WOWow-F.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/0RLRrGnV/art-Filters-08chrome4dark-WOWow-F.jpg>
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/b5HdmH6s/art-Filters-08chrome4dark-WOWow-F.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/3ykG88gy/art-Filters-08chrome4dark-WOWow-F-4.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/393f0HTF/art-Filters-08chrome5brite-F.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/ZRBG7CR1/art-Filters-08chrome-F.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/XfmzCH3Q/art-Filters-08chrome-F.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/dw5SY04n/art-Filters-08chrome-F.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/zVS8pvQR/art-Filters-08chrome-F.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/JR9mmtd6/art-Filters-08chrome-F-for-Crop.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/C3Zr6scd/art-Filters-05-NICEf.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/TxRkyph5/art-Filters-05-NICE6-copy.jpg>
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/qFmvc5X1/art-Filters-05-NICE5-copy.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/spsFzXmz/art-Filters-05-NICE4-copy.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/Xd8jjFP/art-Filters-01-F.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/spsFzXmz/art-Filters-05-NICE4-copy.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/7tPhF58f/art-Filters-05-NICEf.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/23zC1q8m/art-Filters-05-NICEcomplex-F.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/21CBdV81/art-Filters-05-NICE8-copy.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/997Jpmcj/art-Filters-05-NICE7-copy.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/23zC1q8m/art-Filters-05-NICEcomplex-F.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/997Jpmcj/art-Filters-05-NICE7-copy.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/Q7kVmWWM/art-Filters-08chrome4dark2-copy.jpg">
+  </li>
+	  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/XZGbwxp5/blocky-copy.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/b547LBXm/blocky-1-copy.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/XZGbwxp5/blocky-copy.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/TB61yvgL/blocky-4-copy.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/XZGbwxp5/blocky-copy.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/23NzPB2v/blocky-6bw-copy.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/HDTZYkNY/blocky-6bw-F-tuphat.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/S74y5c1t/blocky-7-copy.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/XZGbwxp5/blocky-copy.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/8nxnSgSm/art-Filters-08chrome-F-blocky-Eye-WRK-jpg-copy.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/Tq4QPG3L/blocky-blocky4copy-1-copy.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/4nGbfc9p/blocky-blocky4copy-2-copy.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/4gtdMQjW/blocky-blocky4copy-3-copy.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/RGMMngD2/blocky-blocky4copy-4-copy.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/cXggwPsd/blocky-blocky4copy-5-copy.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/5hrWfjnG/blocky-blocky4copy-7-copy.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/JWbTNCRQ/blocky-blocky4copy-8-copy.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/5gdNRLTp/blocky-blocky4copy-9-copy.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/0y6pb3S9/blocky-blocky4copy-10-copy.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/fG1jL8rP/blocky-blocky4copy-11-copy.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/bRvrjwt3/blocky-blocky4copy-92-copy.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/C3Py3N9R/LEAF-3-F-2argb.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/8nZyGnht/art-Filters-08chrome4dark-WOWow-F-WRK44-lt-Grn-F-cnvt2-WG-DUP-LEAF-3-F-2argb.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/HTRDWq4k/shinygras-5liq.jpg">
+  </li>
+  <li>
+    <img onclick="JustSoPicWindow_onclick1(this,'click screen to close','hug image','0')" src="https://i.ibb.co/5hyR4yWG/IMG-1033rot-ALargb-start6-ALwork-4-whbrd7-F-grnfthr2.jpg">
+  </li>
+
+  <li></li>
+</ul>
+
+</main>
+
+
+</body>
+</html>
